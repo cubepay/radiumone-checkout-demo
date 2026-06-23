@@ -1,0 +1,10 @@
+{
+  "name": "@cubepay-demos/html-vanilla",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env server.mjs",
+    "start:no-env": "node server.mjs"
+  }
+}

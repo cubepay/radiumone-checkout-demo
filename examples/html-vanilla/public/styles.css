@@ -1,0 +1,257 @@
+/* Wireframe styles — greyscale by design. The cart UI is not the point of this
+   demo; the integration code is. But the LAYOUT should look like a typical
+   shopping cart so the demo reads naturally to merchants. */
+
+:root {
+  --ink:       #111;
+  --ink-soft:  #444;
+  --ink-mute:  #666;
+  --line:      #ddd;
+  --line-soft: #f0f0f0;
+  --bg:        #fff;
+  --bg-soft:   #fafafa;
+  --bg-mute:   #f3f4f6;
+  --accent:    #1f2937; /* dark slate — wireframe-friendly, not branded */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  padding: 2rem;
+  max-width: 760px;
+  margin: 0 auto;
+  line-height: 1.4;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+.site-header h1 { font-size: 1.1rem; color: var(--ink-soft); font-weight: 500; }
+
+.banner {
+  font-size: 0.75rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  display: inline-block;
+  white-space: nowrap;
+}
+.banner.mock { background: var(--bg-mute); color: var(--ink-mute); border: 1px solid var(--line); }
+.banner.real { background: #ecfdf5; color: #065f46; border: 1px solid #6ee7b7; }
+
+/* ─── Cart ──────────────────────────────────────────────────────────────── */
+
+.cart { margin-bottom: 1.5rem; }
+
+.cart__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.cart__title { font-size: 1rem; font-weight: 600; color: var(--ink-soft); }
+.cart__count { font-size: 0.8rem; color: var(--ink-mute); }
+
+.cart__items { list-style: none; }
+
+.cart-row {
+  display: grid;
+  grid-template-columns: 56px 1fr auto auto auto 28px;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.cart-row:last-child { border-bottom: none; }
+
+.cart-row__thumb {
+  width: 56px; height: 56px;
+  border: 1px dashed #aaa;
+  background: var(--bg-soft);
+  border-radius: 4px;
+}
+
+.cart-row__info { min-width: 0; }
+.cart-row__name { font-size: 0.9rem; font-weight: 500; }
+.cart-row__desc { font-size: 0.75rem; color: var(--ink-mute); margin-top: 0.15rem; }
+
+.cart-row__qty {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0.2rem 0.4rem;
+  background: var(--bg-soft);
+}
+.qty-btn {
+  width: 22px; height: 22px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink-mute);
+  border-radius: 3px;
+  font-size: 0.85rem;
+  cursor: pointer; /* now functional — adjusts quantity */
+  line-height: 1;
+}
+.qty-btn:hover { background: var(--bg-mute); }
+.qty-value { font-size: 0.85rem; min-width: 1.2rem; text-align: center; }
+
+/* Editable inline inputs (unit price + quantity). */
+.qty-input, .unit-input {
+  font-size: 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 0.15rem 0.3rem;
+  background: var(--bg);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.qty-input { width: 2.6rem; text-align: center; }
+.unit-input { width: 5rem; text-align: right; }
+.qty-input:focus, .unit-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(31, 41, 55, 0.15);
+}
+.input-prefix { font-size: 0.75rem; color: var(--ink-mute); }
+
+.cart-row__unit, .cart-row__subtotal {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.cart-row__unit { display: inline-flex; align-items: center; justify-content: flex-end; gap: 0.3rem; }
+.cart-row__subtotal { font-weight: 500; color: var(--ink); }
+
+.cart-row__remove {
+  width: 28px; height: 28px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink-mute);
+  border-radius: 3px;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: not-allowed;
+}
+
+.cart__summary {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 2px solid var(--line-soft);
+  display: grid;
+  gap: 0.4rem;
+}
+.summary-row {
+  display: flex; justify-content: space-between;
+  font-size: 0.9rem; color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.summary-row--adjustment { color: var(--ink-mute); font-size: 0.85rem; }
+.summary-row__kind { font-size: 0.7rem; color: var(--ink-mute); opacity: 0.7; }
+
+/* Discount toggle: a checkbox lets the shopper not apply the welcome discount. */
+.summary-row--toggle { align-items: center; }
+.summary-toggle { display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer; }
+.summary-toggle input { cursor: pointer; }
+.summary-row--disabled .summary-toggle > span,
+.summary-row--disabled > span:last-child { text-decoration: line-through; opacity: 0.55; }
+.summary-row--total {
+  font-weight: 600; color: var(--ink); font-size: 1rem;
+  border-top: 1px solid var(--line-soft);
+  padding-top: 0.5rem; margin-top: 0.2rem;
+}
+
+/* ─── Checkout panel ────────────────────────────────────────────────────── */
+
+.checkout-panel { margin-top: 2rem; }
+.checkout-panel__hint {
+  font-size: 0.8rem; color: var(--ink-mute);
+  margin-bottom: 0.75rem;
+}
+
+.checkout-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+.checkout-btn {
+  background: var(--accent);
+  color: #fff;
+  border: 1px solid var(--accent);
+  padding: 0.65rem 1.2rem;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+  min-width: 180px;
+}
+.checkout-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.checkout-btn__label { font-weight: 600; }
+.checkout-btn__sub { font-size: 0.7rem; opacity: 0.8; margin-top: 0.15rem; }
+
+.checkout-btn--alt {
+  background: var(--bg);
+  color: var(--accent);
+}
+.checkout-btn--alt .checkout-btn__sub { opacity: 0.7; }
+
+/* ─── Mock modal ────────────────────────────────────────────────────────── */
+
+#mock-modal {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  justify-content: center; align-items: center;
+  z-index: 50;
+}
+.modal-box {
+  background: #fff; border-radius: 8px; padding: 1.5rem;
+  max-width: 640px; width: 90%;
+  max-height: 90vh; overflow-y: auto;
+}
+.modal-box h2 { margin-bottom: 0.5rem; font-size: 1rem; }
+.modal-sub { font-size: 0.8rem; color: var(--ink-mute); margin-bottom: 0.5rem; }
+.modal-box pre {
+  background: #f4f4f4; padding: 1rem; border-radius: 4px;
+  font-size: 0.75rem; overflow-x: auto; white-space: pre-wrap; word-break: break-all;
+  margin-bottom: 0.75rem;
+}
+.modal-close { float: right; background: none; border: none; font-size: 1.2rem; cursor: pointer; }
+
+/* ─── Success/cancel pages ──────────────────────────────────────────────── */
+
+.result-ok   { color: #065f46; font-weight: 600; font-size: 1.1rem; }
+.result-fail { color: #b91c1c; font-weight: 600; font-size: 1.1rem; }
+
+/* ─── file:// fallback ──────────────────────────────────────────────────── */
+
+.file-protocol-error {
+  border: 1px solid #fca5a5;
+  background: #fef2f2;
+  padding: 1.5rem;
+  border-radius: 6px;
+  color: #7f1d1d;
+}
+.file-protocol-error h1 { font-size: 1.1rem; margin-bottom: 0.75rem; }
+.file-protocol-error p  { font-size: 0.9rem; margin-bottom: 0.75rem; line-height: 1.5; }
+.file-protocol-error pre {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  color: var(--ink);
+  margin-bottom: 0.75rem;
+  white-space: pre-wrap;
+}
+.file-protocol-error code { background: #fee2e2; padding: 0 0.25rem; border-radius: 3px; }
+.file-protocol-error .hint { color: #991b1b; opacity: 0.85; }

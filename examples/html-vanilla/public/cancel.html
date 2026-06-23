@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment cancelled — RadiumOne Checkout</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header"><h1>Demo Store &middot; payment return</h1></header>
+  <div id="result"></div>
+  <p style="margin-top:1.5rem"><a href="/">&larr; Back to cart</a></p>
+
+  <script type="module">
+    const params = Object.fromEntries(new URLSearchParams(location.search));
+    const { order_ref, nonce, checkout_id, reason } = params;
+    const resultEl = document.getElementById('result');
+
+    if (reason === 'timeout') {
+      resultEl.innerHTML = '<p class="result-fail">Your session timed out — please try again.</p>';
+    } else if (!checkout_id || !nonce) {
+      resultEl.innerHTML = '<p class="result-fail">Payment cancelled (mock mode &mdash; no real session)</p>';
+    } else {
+      // Verify the nonce purely as an authenticity check. Cancel is non-
+      // authoritative — nothing gets fulfilled — but we still confirm the
+      // return came from OUR session.
+      try {
+        const url = `/api/return-verify?checkout_id=${encodeURIComponent(checkout_id)}&nonce=${encodeURIComponent(nonce)}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        const status = data.session?.status ?? 'unknown';
+        resultEl.innerHTML = `
+          <p class="result-fail">Payment cancelled</p>
+          <p class="result-detail">Order reference: ${order_ref ?? '—'}<br>
+          Checkout ID: ${checkout_id}<br>
+          Session status (live readback): <strong>${status}</strong></p>`;
+      } catch {
+        resultEl.innerHTML = '<p class="result-fail">Payment cancelled (server unreachable)</p>';
+      }
+    }
+  </script>
+</body>
+</html>

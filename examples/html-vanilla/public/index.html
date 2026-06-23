@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo Store — RadiumOne Checkout</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Inline (non-module) script so it runs even if the type=module scripts
+       below get blocked by file:// CORS. Tells the user to use the server. -->
+  <script>
+    if (location.protocol === 'file:') {
+      document.addEventListener('DOMContentLoaded', () => {
+        document.body.innerHTML = `
+          <main class="file-protocol-error">
+            <h1>This page can't run from <code>file://</code></h1>
+            <p>The demo uses ES modules and imports a shared cart fixture from <code>/shared/cart/</code>. Browsers block both over <code>file://</code> (you'll see the CORS error in the console).</p>
+            <p>Run the bundled server instead &mdash; <strong>no install needed</strong>:</p>
+            <pre>cd examples/html-vanilla
+node server.mjs
+
+# then open http://localhost:3000</pre>
+            <p class="hint">See <code>examples/html-vanilla/README.md</code> for the full walkthrough.</p>
+          </main>`;
+      });
+    }
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <h1>Demo Store &middot; mock cart</h1>
+    <span id="mode-banner" class="banner mock">Detecting mode…</span>
+  </header>
+
+  <div id="cart-container"></div>
+
+  <section class="checkout-panel">
+    <p class="checkout-panel__hint">
+      Two integration patterns &mdash; same total, different payload shape.
+      Click either to see what each sends to the HPP.
+    </p>
+
+    <div class="checkout-actions">
+      <button id="checkout-overview-btn" class="checkout-btn" type="button">
+        <span class="checkout-btn__label">Checkout</span>
+        <span class="checkout-btn__sub">amount + description only</span>
+      </button>
+
+      <button id="checkout-itemized-btn" class="checkout-btn checkout-btn--alt" type="button">
+        <span class="checkout-btn__label">Checkout</span>
+        <span class="checkout-btn__sub">with line items</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Mock mode modal: shows the curl command that would be sent -->
+  <div id="mock-modal" role="dialog" aria-modal="true" aria-label="Mock checkout">
+    <div class="modal-box">
+      <button class="modal-close" id="mock-modal-close" aria-label="Close">&times;</button>
+      <h2>Mock mode &mdash; pattern: <span id="mock-mode-label"></span></h2>
+      <p class="modal-sub">This is the request your server would send to the HPP. Curl copied to clipboard.</p>
+      <pre id="mock-curl"></pre>
+      <p class="modal-sub">There is no real session to redirect to in mock mode &mdash; close this dialog when done.</p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { renderCart } from './cart.js';
+    renderCart(document.getElementById('cart-container'));
+  </script>
+  <script type="module" src="checkout.js"></script>
+</body>
+</html>
