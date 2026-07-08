@@ -15,7 +15,7 @@ Then fill in your values from the RadiumOne merchant dashboard.
 
 | Variable | What it's for | Where to get it | Keep it secret? |
 |---|---|---|---|
-| `RADIUMONE_BASE_URL` | The HPP API base URL. Sandbox is **public**: `https://checkout-sandbox.radiumone.com` (already set in `.env.example`). The **production** host is different — ask your RadiumOne contact. Test vs production is selected by the key prefix (`r1sk_test_*` vs `r1sk_prod_*`), not the host. | Sandbox: as-is · Production: your RadiumOne contact | No |
+| `RADIUMONE_BASE_URL` | The HPP API base URL. Sandbox is **public**: `https://checkout-sandbox.radiumone.io` (already set in `.env.example`). The **production** host is different — ask your RadiumOne contact. Test vs production is selected by the key prefix (`r1sk_test_*` vs `r1sk_prod_*`), not the host. | Sandbox: as-is · Production: your RadiumOne contact | No |
 | `RADIUMONE_SECRET_KEY` | Authenticates your server's API calls to the HPP. Starts with `r1sk_test_`. | Merchant dashboard → API keys | **Yes — server only. Never expose to the browser.** |
 | `MERCHANT_BASE_URL` | The base URL of your local server. The HPP uses this to build the `success_url` and `cancel_url` it redirects back to. | Set to `http://localhost:3000` for local development | No |
 | `RADIUMONE_WEBHOOK_SECRET` | **Optional.** Signing secret (`whsec_<hex>`) used to verify Gateway webhook deliveries at `POST /api/webhook` (Step 4). Leave unset if you're not testing webhooks; the receiver returns `503` until it's set. | CubePay support, when you register a webhook endpoint | **Yes — server only.** |

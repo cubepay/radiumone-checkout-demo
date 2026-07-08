@@ -126,7 +126,7 @@ All required vars with descriptions: [docs/env-config.md](./docs/env-config.md)
 Quick reference:
 
 ```
-RADIUMONE_BASE_URL          HPP API base URL — sandbox https://checkout-sandbox.radiumone.com (prod: ask your RadiumOne contact)
+RADIUMONE_BASE_URL          HPP API base URL — sandbox https://checkout-sandbox.radiumone.io (prod: ask your RadiumOne contact)
 RADIUMONE_SECRET_KEY        r1sk_test_… — server only, never browser
 MERCHANT_BASE_URL           Your app's base URL (used to build redirect URLs)
 ```

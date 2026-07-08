@@ -20,7 +20,7 @@ You need one value from the dashboard:
 |---|---|---|
 | Secret key | API keys → Secret key | `RADIUMONE_SECRET_KEY` (starts with `r1sk_test_`) |
 
-The sandbox host (`RADIUMONE_BASE_URL`) is public and already set in `.env.example` to `https://checkout-sandbox.radiumone.com` — no need to change it for sandbox testing. For the production host, ask your RadiumOne contact.
+The sandbox host (`RADIUMONE_BASE_URL`) is public and already set in `.env.example` to `https://checkout-sandbox.radiumone.io` — no need to change it for sandbox testing. For the production host, ask your RadiumOne contact.
 
 > **Tip:** to drive a real payment to completion in the sandbox, use a [test card](./integration-guide.md#testing-sandbox-only) such as `4242 4242 4242 4242`.
 
