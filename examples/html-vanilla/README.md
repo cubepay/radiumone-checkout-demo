@@ -59,7 +59,7 @@ See [../../docs/troubleshooting.md](../../docs/troubleshooting.md).
 ```bash
 # Set vars manually, then run without --env-file
 export RADIUMONE_SECRET_KEY=r1sk_test_...
-export RADIUMONE_BASE_URL=https://checkout-sandbox.radiumone.com
+export RADIUMONE_BASE_URL=https://checkout-sandbox.radiumone.io
 export MERCHANT_BASE_URL=http://localhost:3000
 node server.mjs
 # or: npm run start:no-env  (after setting env manually)

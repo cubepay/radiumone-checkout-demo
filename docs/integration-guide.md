@@ -30,7 +30,7 @@ flowchart LR
 
 | Need | Value |
 |---|---|
-| Sandbox API host | `https://checkout-sandbox.radiumone.com` |
+| Sandbox API host | `https://checkout-sandbox.radiumone.io` |
 | Production API host | Ask your RadiumOne contact |
 | Secret key | `r1sk_test_*` (sandbox) / `r1sk_prod_*` (production) — from the merchant dashboard, **server-side only** |
 
@@ -38,7 +38,7 @@ The demo reads three environment variables. Full descriptions in
 [env-config.md](./env-config.md):
 
 ```
-RADIUMONE_BASE_URL      https://checkout-sandbox.radiumone.com
+RADIUMONE_BASE_URL      https://checkout-sandbox.radiumone.io
 RADIUMONE_SECRET_KEY    r1sk_test_…   (never ship to the browser)
 MERCHANT_BASE_URL       https://yourstore.com  (http://localhost:3000 for local dev)
 ```
@@ -147,7 +147,7 @@ The demo cart (from `shared/cart/cart-fixture.mjs`):
 ```json
 {
   "checkout_id": "chk_01jq8f2abcde",
-  "checkout_url": "https://checkout-sandbox.radiumone.com/pay/chk_01jq8f2abcde",
+  "checkout_url": "https://checkout-sandbox.radiumone.io/pay/chk_01jq8f2abcde",
   "status": "pending",
   "expires_at": 1745600000,
   "payment_methods": [
